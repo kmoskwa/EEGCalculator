@@ -67,9 +67,9 @@ public:
     m_digitNeighbours[8].append(Neighbour(4, -1,  1));
     m_digitNeighbours[8].append(Neighbour(6,  1,  1));
 
-    m_digitNeighbours[9].append(Neighbour(8,  0,  0));
-    m_digitNeighbours[9].append(Neighbour(6,  0,  0));
-    m_digitNeighbours[9].append(Neighbour(5,  0,  0));
+    m_digitNeighbours[9].append(Neighbour(8, -1,  0));
+    m_digitNeighbours[9].append(Neighbour(6,  0,  1));
+    m_digitNeighbours[9].append(Neighbour(5, -1,  1));
     //qsrand(); 
     }
   ~scenarioPrivate(void) {}
