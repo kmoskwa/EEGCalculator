@@ -78,8 +78,8 @@ Calculator::Calculator(QWidget *parent)
     Button *changeSignButton = createButton(tr("\261"), SLOT(changeSignClicked()));
 
     Button *backspaceButton = createButton(tr("Backspace"), SLOT(backspaceClicked()));
-    Button *clearButton = createButton(tr("Clear"), SLOT(clear()));
-    Button *clearAllButton = createButton(tr("Clear All"), SLOT(clearAll()));
+    Button *clearButton = createButton(tr("CE"), SLOT(clear()));
+    Button *clearAllButton = createButton(tr("C"), SLOT(clearAll()));
 
     Button *clearMemoryButton = createButton(tr("MC"), SLOT(clearMemory()));
     Button *readMemoryButton = createButton(tr("MR"), SLOT(readMemory()));
@@ -195,7 +195,7 @@ void Calculator::digitClicked()
         display->clear();
 	waitingForOperand = false;
     }
-    QList<int> digitSequence = scenario::getInstance()->geDigitSequence();
+    QList<int> digitSequence = scenario::getInstance()->getDigitSequence();
     if (digitSequence.isEmpty())
       {
       digitSequence.append(digitValue);
@@ -211,20 +211,24 @@ void Calculator::digitClicked()
 void Calculator::unaryOperatorClicked()
 //! [8] //! [9]
 {
+
     Button *clickedButton = qobject_cast<Button *>(sender());
     QString clickedOperator = clickedButton->text();
     double operand = display->text().toDouble();
     double result = 0.0;
 
     if (clickedOperator == tr("Sqrt")) {
+        scenario::getInstance()->onButtonClicked("Sqrt");
         if (operand < 0.0) {
             abortOperation();
             return;
         }
         result = sqrt(operand);
     } else if (clickedOperator == tr("x\262")) {
+        scenario::getInstance()->onButtonClicked("x^2");
         result = pow(operand, 2.0);
     } else if (clickedOperator == tr("1/x")) {
+        scenario::getInstance()->onButtonClicked("1/x");
         if (operand == 0.0) {
 	    abortOperation();
 	    return;
@@ -243,6 +247,7 @@ void Calculator::additiveOperatorClicked()
     Button *clickedButton = qobject_cast<Button *>(sender());
     QString clickedOperator = clickedButton->text();
     double operand = display->text().toDouble();
+    scenario::getInstance()->onButtonClicked(clickedOperator);
 
 //! [11] //! [12]
     if (!pendingMultiplicativeOperator.isEmpty()) {
@@ -281,6 +286,15 @@ void Calculator::multiplicativeOperatorClicked()
 {
     Button *clickedButton = qobject_cast<Button *>(sender());
     QString clickedOperator = clickedButton->text();
+    if (clickedOperator == "\367")
+       {
+       scenario::getInstance()->onButtonClicked("/");
+       }
+    else if (clickedOperator == "\327")
+       {
+       scenario::getInstance()->onButtonClicked("*");
+       }
+
     double operand = display->text().toDouble();
 
     if (!pendingMultiplicativeOperator.isEmpty()) {
@@ -301,6 +315,8 @@ void Calculator::multiplicativeOperatorClicked()
 //! [20]
 void Calculator::equalClicked()
 {
+    scenario::getInstance()->onButtonClicked("=");
+
     double operand = display->text().toDouble();
 
     if (!pendingMultiplicativeOperator.isEmpty()) {
@@ -331,6 +347,7 @@ void Calculator::equalClicked()
 //! [22]
 void Calculator::pointClicked()
 {
+    scenario::getInstance()->onButtonClicked(".");
     if (waitingForOperand)
         display->setText("0");
     if (!display->text().contains("."))
@@ -342,6 +359,7 @@ void Calculator::pointClicked()
 //! [24]
 void Calculator::changeSignClicked()
 {
+    scenario::getInstance()->onButtonClicked("+/-");
     QString text = display->text();
     double value = text.toDouble();
 
@@ -357,6 +375,7 @@ void Calculator::changeSignClicked()
 //! [26]
 void Calculator::backspaceClicked()
 {
+    scenario::getInstance()->onButtonClicked("<<");
     if (waitingForOperand)
         return;
 
@@ -373,6 +392,7 @@ void Calculator::backspaceClicked()
 //! [28]
 void Calculator::clear()
 {
+    scenario::getInstance()->onButtonClicked("CE");
     if (waitingForOperand)
         return;
 
@@ -384,6 +404,7 @@ void Calculator::clear()
 //! [30]
 void Calculator::clearAll()
 {
+    scenario::getInstance()->onButtonClicked("C");
     sumSoFar = 0.0;
     factorSoFar = 0.0;
     pendingAdditiveOperator.clear();
@@ -396,23 +417,27 @@ void Calculator::clearAll()
 //! [32]
 void Calculator::clearMemory()
 {
+    scenario::getInstance()->onButtonClicked("MC");
     sumInMemory = 0.0;
 }
 
 void Calculator::readMemory()
 {
+    scenario::getInstance()->onButtonClicked("MR");
     display->setText(QString::number(sumInMemory));
     waitingForOperand = true;
 }
 
 void Calculator::setMemory()
 {
+    scenario::getInstance()->onButtonClicked("MS");
     equalClicked();
     sumInMemory = display->text().toDouble();
 }
 
 void Calculator::addToMemory()
 {
+    scenario::getInstance()->onButtonClicked("M+");
     equalClicked();
     sumInMemory += display->text().toDouble();
 }

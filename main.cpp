@@ -41,15 +41,15 @@
 #include <QApplication>
 
 #include "calculator.h"
+#include "EEGOpenVibe.h"
+#include "scenario.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    EEGOpenVibe::getInstance();
+    scenario::getInstance();
     Calculator calc;
-#if defined(Q_OS_SYMBIAN)
-    calc.showMaximized();
-#else
     calc.show();
-#endif
     return app.exec();
 }

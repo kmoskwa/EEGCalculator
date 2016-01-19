@@ -17,7 +17,10 @@ public:
     void setCurrentScenario(int currentScenario);
 
     void onDigitClicked(int digit);
-    QList<int> geDigitSequence(void);
+    void onButtonClicked(const QString &aButton);
+    QList<int> getDigitSequence(void);
+
+    void slotStimulationReceived(int button, int isOn);
 
 private:
     scenario(QObject *parent = NULL);

@@ -38,6 +38,9 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{67d62a83-fcd6-43de-9c06-f02c53c2c946}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EEGCommon">
+      <UniqueIdentifier>{2ff89bc9-9fe7-4596-91a3-27d8d16fc2b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="button.cpp">
@@ -70,6 +73,18 @@
     <ClCompile Include="Release\moc_scenario.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="Debug\moc_EEGOpenVibe.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Release\moc_EEGOpenVibe.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\EEGCommon\EEGOpenVibe.cpp">
+      <Filter>EEGCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\EEGCommon\GenericVRPNServer.cpp">
+      <Filter>EEGCommon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="button.h">
@@ -81,10 +96,16 @@
     <CustomBuild Include="scenario.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="..\EEGCommon\EEGOpenVibe.h">
+      <Filter>EEGCommon</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EEGCommon\GenericVRPNServer.h">
+      <Filter>EEGCommon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
